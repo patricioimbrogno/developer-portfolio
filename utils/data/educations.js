@@ -1,20 +1,26 @@
 export const educations = [
   {
     id: 1,
-    title: "Bachelor Degree",
-    duration: "2020 - Present",
-    institution: "National University of Bangladesh",
+    title: "Coding Bootcamp",
+    duration: "2022",
+    institution: "Plataforma 5",
   },
   {
     id: 2,
-    title: "Higher Secondary Certificate",
-    duration: "2018 - 2020",
-    institution: "Noakhali Islamia Kamil Madrasah",
+    title: "UX Design",
+    duration: "2021",
+    institution: "Digital House",
   },
   {
     id: 3,
-    title: "Secondary School Certificate",
-    duration: "2008 - 2018",
-    institution: "Baitus Saif Islamia Madrasah",
-  }
-]
+    title: "Master's Degree in Institutional Communications Management",
+    duration: "2018 - 2019",
+    institution: "UADE Business School",
+  },
+  {
+    id: 4,
+    title: "Bachelor's Degree in Journalism",
+    duration: "2008 - 2015",
+    institution: "Universidad del Salvador",
+  },
+];

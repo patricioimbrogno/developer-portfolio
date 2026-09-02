@@ -70,42 +70,49 @@ async function sendEmail(payload, message) {
 export async function POST(request) {
   try {
     const payload = await request.json();
-    const { name, email, message: userMessage } = payload;
-    const token = process.env.TELEGRAM_BOT_TOKEN;
-    const chat_id = process.env.TELEGRAM_CHAT_ID;
 
-    // Validate environment variables
-    if (!token || !chat_id) {
-      return NextResponse.json({
-        success: false,
-        message: 'Telegram token or chat ID is missing.',
-      }, { status: 400 });
+    const { name, email, message: userMessage } = payload;
+
+    if (!name || !email || !userMessage) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "All fields are required.",
+        },
+        { status: 400 }
+      );
     }
 
-    const message = `New message from ${name}\n\nEmail: ${email}\n\nMessage:\n\n${userMessage}\n\n`;
+    const message = `New message from ${name}\n\nEmail: ${email}\n\nMessage:\n\n${userMessage}`;
 
-    // Send Telegram message
-    const telegramSuccess = await sendTelegramMessage(token, chat_id, message);
-
-    // Send email
     const emailSuccess = await sendEmail(payload, message);
 
-    if (telegramSuccess && emailSuccess) {
-      return NextResponse.json({
-        success: true,
-        message: 'Message and email sent successfully!',
-      }, { status: 200 });
+    if (emailSuccess) {
+      return NextResponse.json(
+        {
+          success: true,
+          message: "Email sent successfully!",
+        },
+        { status: 200 }
+      );
     }
 
-    return NextResponse.json({
-      success: false,
-      message: 'Failed to send message or email.',
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        message: "Failed to send email.",
+      },
+      { status: 500 }
+    );
   } catch (error) {
-    console.error('API Error:', error.message);
-    return NextResponse.json({
-      success: false,
-      message: 'Server error occurred.',
-    }, { status: 500 });
+    console.error("API Error:", error.message);
+
+    return NextResponse.json(
+      {
+        success: false,
+        message: "Server error occurred.",
+      },
+      { status: 500 }
+    );
   }
-};
+}
